@@ -1,5 +1,5 @@
 package com.example.priceforecast;
-
+//---importing libraries-------
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Provided reference to view of elements
         widthEditText = findViewById(R.id.widthEditText);
         lengthEditText = findViewById((R.id.lengthEditText));
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         calculatingTextView = findViewById(R.id.calculatingTextView);
     }
 
+    //Method to hide keyboard when we touch outside editText fields in Android App
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -56,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-
+    //On clicking Calculate button this method is called
     public void getData(View view){
+        //To check the state of button and change it if condition is true
         if(buttonState.equals("reset")){
             submitButton.setText("Calculate");
             buttonState="calculate";
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             String length = lengthEditText.getText().toString();
             String height = heightEditText.getText().toString();
 
+            //To check if all editText fields have some value before posting data to server
             if (length.equals("")) {
                 lengthEditText.requestFocus();
                 Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
@@ -91,11 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 lengthEditText.setEnabled(false);
                 widthEditText.setEnabled(false);
                 heightEditText.setEnabled(false);
-                //Retrofit Class
+
+                //Retrofit Class defining base url where app needs to post data
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://prediction1-rest-api.herokuapp.com/")
                         .build();
 
+                //Retrofit class generates an implementation of Api interface
                 Api api = retrofit.create(Api.class);
 
                 String json = "{\n" +
@@ -103,10 +109,11 @@ public class MainActivity extends AppCompatActivity {
                         "\t\"length\": " + length + ",\n" +
                         "\t\"height\": " + height + "\n" +
                         "}";
-
+                //requestBody contains json data which App POST to server
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-
+                //This method POST request and we receive return data in ResponseBody
                 api.postUser(requestBody).enqueue(new Callback<ResponseBody>() {
+                    //Method executed if we receive response from server
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
@@ -116,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonOb = new JSONObject(json);
                             float price = Float.parseFloat(jsonOb.optString("price"));
                             if(price>10000000)
-                                outputTextView.setText("$"+(price));
+                                outputTextView.setText("$"+(price));            //Price displayed in scientific notation
                             else
-                                outputTextView.setText("$" + String.format("%.2f", price));
+                                outputTextView.setText("$" + String.format("%.2f", price));     //Price displayed as float rounded off to two decimal places
                             buttonState="reset";
                             submitButton.setClickable(true);
                             submitButton.setText("Reset");
@@ -133,10 +140,11 @@ public class MainActivity extends AppCompatActivity {
                             heightEditText.setEnabled(true);
                         }
                     }
-
+                    //Method executed if request fails
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        if(t.toString().equals("java.net.UnknownHostException: Unable to resolve host \"prediction1-rest-api.herokuapp.com\": No address associated with hostname"))
+                        if(t.toString().equals("java.net.UnknownHostException:" +
+                                " Unable to resolve host \"prediction1-rest-api.herokuapp.com\": No address associated with hostname"))
                             Toast.makeText(getApplicationContext(), "Please Check Your Network Connection", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
