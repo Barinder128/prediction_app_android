@@ -103,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
                 //Retrofit class generates an implementation of Api interface
                 Api api = retrofit.create(Api.class);
-
+                //json data which App has to POST to server
                 String json = "{\n" +
                         "\t\"width\": " + width + ",\n" +
                         "\t\"length\": " + length + ",\n" +
                         "\t\"height\": " + height + "\n" +
                         "}";
-                //requestBody contains json data which App POST to server
+
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-                //This method POST request and we receive return data in ResponseBody
+                //This method POST request and we receive return data in response
                 api.postUser(requestBody).enqueue(new Callback<ResponseBody>() {
                     //Method executed if we receive response from server
                     @Override
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             calculatingTextView.setText("");
-                            String json = response.body().string();
+                            String json = response.body().string();     //receive reponse from server
                             JSONObject jsonOb = new JSONObject(json);
                             float price = Float.parseFloat(jsonOb.optString("price"));
                             if(price>10000000)
