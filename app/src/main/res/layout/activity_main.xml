@@ -101,7 +101,7 @@
         android:layout_marginEnd="70dp"
         android:background="#584303"
         android:fontFamily="@font/roboto_slab"
-        android:onClick="getData"
+        android:onClick="post_data"
         android:text="Calculate"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
