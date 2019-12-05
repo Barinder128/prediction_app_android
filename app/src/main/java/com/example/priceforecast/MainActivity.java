@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //On clicking Calculate button this method is called
-    public void post_data(View view){
+    public void postData(View view){
         //To check the state of button and change it if condition is true
         if(buttonState.equals("reset")){
             submitButton.setText("Calculate");
