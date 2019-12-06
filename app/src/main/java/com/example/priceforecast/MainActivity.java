@@ -141,15 +141,10 @@ public class MainActivity extends AppCompatActivity {
                         .build();
                 //Retrofit class generates an implementation of Api interface
                 Api api = retrofit.create(Api.class);
-                // converting dimensions from String to Float
-                float _length = Float.parseFloat(length);
-                float _width = Float.parseFloat(width);
-                float _height = Float.parseFloat(height);
-                //json data which App has to POST to server
                 String json = "{\n" +
-                        "\t\"width\": " + _width + ",\n" +
-                        "\t\"length\": " + _length + ",\n" +
-                        "\t\"height\": " + _height + "\n" +
+                        "\t\"width\": " + Float.parseFloat(width) + ",\n" +
+                        "\t\"length\": " + Float.parseFloat(length) + ",\n" +
+                        "\t\"height\": " + Float.parseFloat(height) + "\n" +
                         "}";
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
