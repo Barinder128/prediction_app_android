@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView calculatingTextView;
     Button submitButton;
     String buttonState = "calculate";
+    boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -58,6 +59,27 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+
+    //to enable app exit on double back press only
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        //Handler().postDelayed will call run after 2 seconds to set doubleBackToExitPressedOnce = false
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
     //On clicking Calculate button this method is called
     public void postData(View view){
         //To check the state of button and change it if condition is true
@@ -78,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             String length = lengthEditText.getText().toString();
             String height = heightEditText.getText().toString();
 
-            //To check if all editText fields have some value before posting data to server
+            //To check if all editText fields have valid values before posting data to server
             if (length.equals("")) {
                 lengthEditText.requestFocus();
                 Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
@@ -88,6 +110,24 @@ public class MainActivity extends AppCompatActivity {
             } else if (height.equals("")) {
                 heightEditText.requestFocus();
                 Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
+            } else if (length.substring(0,1).equals(".")) {
+                lengthEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
+            } else if (width.substring(0,1).equals(".")) {
+                widthEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
+            } else if (height.substring(0,1).equals(".")) {
+                heightEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
+            } else if (length.substring(length.length()-1).equals(".")) {
+                lengthEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
+            } else if (width.substring(width.length()-1).equals(".")) {
+                widthEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
+            } else if (height.substring(height.length()-1).equals(".")) {
+                heightEditText.requestFocus();
+                Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
             } else {
                 calculatingTextView.setText("Calculating Price");
                 submitButton.setClickable(false);
@@ -123,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonOb = new JSONObject(json);
                             float price = Float.parseFloat(jsonOb.optString("price"));
                             if(price>10000000)
-                                outputTextView.setText("$"+(price));            //Price displayed in scientific notation
+                                outputTextView.setText("$" + (price));            //Price displayed in scientific notation
                             else
                                 outputTextView.setText("$" + String.format("%.2f", price));     //Price displayed as float rounded off to two decimal places
                             buttonState="reset";
