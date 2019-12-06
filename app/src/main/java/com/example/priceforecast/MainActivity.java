@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             String width = widthEditText.getText().toString();
             String length = lengthEditText.getText().toString();
             String height = heightEditText.getText().toString();
-
             //To check if all editText fields have valid values before posting data to server
             if (length.equals("")) {
                 lengthEditText.requestFocus();
@@ -140,14 +139,17 @@ public class MainActivity extends AppCompatActivity {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://prediction1-rest-api.herokuapp.com/")
                         .build();
-
                 //Retrofit class generates an implementation of Api interface
                 Api api = retrofit.create(Api.class);
+                // converting dimensions from String to Float
+                float _length = Float.parseFloat(length);
+                float _width = Float.parseFloat(width);
+                float _height = Float.parseFloat(height);
                 //json data which App has to POST to server
                 String json = "{\n" +
-                        "\t\"width\": " + width + ",\n" +
-                        "\t\"length\": " + length + ",\n" +
-                        "\t\"height\": " + height + "\n" +
+                        "\t\"width\": " + _width + ",\n" +
+                        "\t\"length\": " + _length + ",\n" +
+                        "\t\"height\": " + _height + "\n" +
                         "}";
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
