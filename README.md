@@ -1,6 +1,13 @@
-# Price Calculator
+# Packaging Price
 
-An Android based Price Calculator app which posts request on server and displays processed data.
-It takes three arguments Length, Width and Height and sends this data to server where RESTful API processes the data and returns the price of an item which is displayed on this App.
+An Android app for calculating the price of packaging box by taking length, width and depth as input. and It send input data to server for processing. The server returns the processed data which is displayed on the application. Retrofit 2 is used to send request and receive response from server in JSON format.
 
-This project is implemented using Android Studio and Retrofit Library.
+## Implementation
+
+This project is implemented using Retrofit 2 Library.
+
+## Compatibility
+
+Software Compatibility: It is compatible with API 23 or greater.
+
+Hardware Compatibility: It is compatible with mobile phones having screen size 4" to 6.3".
