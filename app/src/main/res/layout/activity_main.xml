@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/depthEditText" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/packaging_logo" />
 
     <TextView
         android:id="@+id/textView"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/roboto_slab"
-        android:text="Price Calculator"
+        android:text="Packaging Price"
         android:textColor="#584303"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lengthEditText" />
 
     <EditText
-        android:id="@+id/heightEditText"
+        android:id="@+id/depthEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -89,7 +89,7 @@
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
-        android:hint="Height (in inches)"
+        android:hint="Depth (in inches)"
         android:inputType="numberDecimal"
         android:maxLength="20"
         android:tag="2"
@@ -114,42 +114,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightEditText" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="59dp"
-        android:fontFamily="@font/roboto_slab"
-        android:text="Price:"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
+        app:layout_constraintTop_toBottomOf="@+id/depthEditText" />
 
     <TextView
         android:id="@+id/outputTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="54dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="44dp"
         android:fontFamily="@font/roboto_slab"
-        android:maxLength="25"
-        android:maxLines="2"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
-
-    <TextView
-        android:id="@+id/calculatingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="59dp"
-        android:fontFamily="@font/roboto_slab"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -27,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
     // declare global variables
     EditText widthEditText;
     EditText lengthEditText;
-    EditText heightEditText;
+    EditText depthEditText;
     TextView outputTextView;
-    TextView calculatingTextView;
     Button submitButton;
     String buttonState = "calculate";
     boolean doubleBackToExitPressedOnce = false;
@@ -38,15 +38,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //To check screen size
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        if(height<1500){
+            setContentView(R.layout.activity_main1);            //shows layout for small screen phones
+        }
+        else {
+            setContentView(R.layout.activity_main);             //show layout for large screen phones
+        }
 
         // Provided reference to view of elements
         widthEditText = findViewById(R.id.widthEditText);
         lengthEditText = findViewById((R.id.lengthEditText));
-        heightEditText = findViewById(R.id.heightEditText);
+        depthEditText = findViewById(R.id.depthEditText);
         outputTextView = findViewById(R.id.outputTextView);
         submitButton = findViewById(R.id.submitButton);
-        calculatingTextView = findViewById(R.id.calculatingTextView);
     }
 
     //Method to hide keyboard when we touch outside editText fields in Android App
@@ -81,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Function To check if all editText fields have valid values before posting data to server
-    public boolean inputFieldValidation(String length, String width, String height){
+    public boolean inputFieldValidation(String length, String width, String depth){
         if (length.equals("")) {
             lengthEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
         } else if (width.equals("")) {
             widthEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
-        } else if (height.equals("")) {
-            heightEditText.requestFocus();
+        } else if (depth.equals("")) {
+            depthEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
         } else if (length.substring(0,1).equals(".")) {
             lengthEditText.requestFocus();
@@ -97,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (width.substring(0,1).equals(".")) {
             widthEditText.requestFocus();
             Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (height.substring(0,1).equals(".")) {
-            heightEditText.requestFocus();
+        } else if (depth.substring(0,1).equals(".")) {
+            depthEditText.requestFocus();
             Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
         } else if (length.substring(length.length()-1).equals(".")) {
             lengthEditText.requestFocus();
@@ -106,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (width.substring(width.length()-1).equals(".")) {
             widthEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (height.substring(height.length()-1).equals(".")) {
-            heightEditText.requestFocus();
+        } else if (depth.substring(depth.length()-1).equals(".")) {
+            depthEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
         } else{
             return true;
@@ -123,25 +131,25 @@ public class MainActivity extends AppCompatActivity {
             buttonState="calculate";
             lengthEditText.setText("");
             widthEditText.setText("");
-            heightEditText.setText("");
+            depthEditText.setText("");
             outputTextView.setText("");
             lengthEditText.setEnabled(true);
             widthEditText.setEnabled(true);
-            heightEditText.setEnabled(true);
+            depthEditText.setEnabled(true);
             lengthEditText.requestFocus();
         } else {
             String width = widthEditText.getText().toString();
             String length = lengthEditText.getText().toString();
-            String height = heightEditText.getText().toString();
+            String depth = depthEditText.getText().toString();
             //Method Call to check if all editText fields have valid values before posting data to server
-            boolean inputFieldCheck = inputFieldValidation(length, width, height);
+            boolean inputFieldCheck = inputFieldValidation(length, width, depth);
             if(inputFieldCheck){
-                calculatingTextView.setText("Calculating Price");
+                outputTextView.setText("Calculating Price");
                 submitButton.setClickable(false);
                 buttonState="fetching_price";
                 lengthEditText.setEnabled(false);
                 widthEditText.setEnabled(false);
-                heightEditText.setEnabled(false);
+                depthEditText.setEnabled(false);
 
                 //Retrofit Class defining base url where app needs to post data
                 Retrofit retrofit = new Retrofit.Builder()
@@ -152,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 String json = "{\n" +
                         "\t\"width\": " + Float.parseFloat(width) + ",\n" +
                         "\t\"length\": " + Float.parseFloat(length) + ",\n" +
-                        "\t\"height\": " + Float.parseFloat(height) + "\n" +
+                        "\t\"depth\": " + Float.parseFloat(depth) + "\n" +
                         "}";
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -163,14 +171,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                         try {
-                            calculatingTextView.setText("");
                             String json = response.body().string();     //receive reponse from server
                             JSONObject jsonOb = new JSONObject(json);
-                            float price = Float.parseFloat(jsonOb.optString("price"));
-                            if(price>10000000)
-                                outputTextView.setText("$" + (price));            //Price displayed in scientific notation
-                            else
-                                outputTextView.setText("$" + String.format("%.2f", price));     //Price displayed as float rounded off to two decimal places
+                            double price = Double.parseDouble(jsonOb.optString("price"));
+                            if(price>10000000) {
+                                String _price = Double.toString(price);
+                                int price_index = _price.indexOf('E');
+                                double __price = Double.parseDouble(_price.substring(0,price_index));
+                                outputTextView.setText("Price: " + String.format("%.2f", __price) + "E" + _price.substring(price_index+1) + "¢");          //Price displayed in scientific notation
+                            }
+                                else
+                                outputTextView.setText("Price: " + String.format("%.2f", price) + "¢");     //Price displayed as double rounded off to two decimal places
                             buttonState="reset";
                             submitButton.setClickable(true);
                             submitButton.setText("Reset");
@@ -179,10 +190,9 @@ public class MainActivity extends AppCompatActivity {
                             buttonState="calculator";
                             submitButton.setClickable(true);
                             outputTextView.setText("");
-                            calculatingTextView.setText("");
                             lengthEditText.setEnabled(true);
                             widthEditText.setEnabled(true);
-                            heightEditText.setEnabled(true);
+                            depthEditText.setEnabled(true);
                         }
                     }
                     //Method executed if request fails
@@ -196,10 +206,9 @@ public class MainActivity extends AppCompatActivity {
                         buttonState="calculator";
                         submitButton.setClickable(true);
                         outputTextView.setText("");
-                        calculatingTextView.setText("");
                         lengthEditText.setEnabled(true);
                         widthEditText.setEnabled(true);
-                        heightEditText.setEnabled(true);
+                        depthEditText.setEnabled(true);
                     }
                 });
 
