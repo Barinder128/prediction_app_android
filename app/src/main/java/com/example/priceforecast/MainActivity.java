@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_main);             //show layout for large screen phones
         }
-
         // Provided reference to view of elements
         widthEditText = findViewById(R.id.widthEditText);
         lengthEditText = findViewById((R.id.lengthEditText));
