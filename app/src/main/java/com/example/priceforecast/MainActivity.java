@@ -26,9 +26,9 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
 
     // declare global variables
-    EditText widthEditText;
-    EditText lengthEditText;
-    EditText depthEditText;
+    EditText mEditText;
+    EditText cEditText;
+    EditText xEditText;
     TextView outputTextView;
     Button submitButton;
     String buttonState = "calculate";
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);             //show layout for large screen phones
         }
         // Provided reference to view of elements
-        widthEditText = findViewById(R.id.widthEditText);
-        lengthEditText = findViewById((R.id.lengthEditText));
-        depthEditText = findViewById(R.id.depthEditText);
+        mEditText = findViewById(R.id.mEditText);
+        cEditText = findViewById((R.id.cEditText));
+        xEditText = findViewById(R.id.xEditText);
         outputTextView = findViewById(R.id.outputTextView);
         submitButton = findViewById(R.id.submitButton);
     }
@@ -88,33 +88,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Function To check if all editText fields have valid values before posting data to server
-    public boolean inputFieldValidation(String length, String width, String depth){
-        if (length.equals("")) {
-            lengthEditText.requestFocus();
+    public boolean inputFieldValidation(String c_value, String m_value, String x_value){
+        if (c_value.equals("")) {
+            cEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
-        } else if (width.equals("")) {
-            widthEditText.requestFocus();
+        } else if (m_value.equals("")) {
+            mEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
-        } else if (depth.equals("")) {
-            depthEditText.requestFocus();
+        } else if (x_value.equals("")) {
+            xEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press calculate", Toast.LENGTH_SHORT).show();
-        } else if (length.substring(0,1).equals(".")) {
-            lengthEditText.requestFocus();
+        } else if (c_value.substring(0,1).equals(".")) {
+            cEditText.requestFocus();
             Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (width.substring(0,1).equals(".")) {
-            widthEditText.requestFocus();
+        } else if (m_value.substring(0,1).equals(".")) {
+            mEditText.requestFocus();
             Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (depth.substring(0,1).equals(".")) {
-            depthEditText.requestFocus();
+        } else if (x_value.substring(0,1).equals(".")) {
+            xEditText.requestFocus();
             Toast.makeText(this, "Input Number should not start with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (length.substring(length.length()-1).equals(".")) {
-            lengthEditText.requestFocus();
+        } else if (c_value.substring(c_value.length()-1).equals(".")) {
+            cEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (width.substring(width.length()-1).equals(".")) {
-            widthEditText.requestFocus();
+        } else if (m_value.substring(m_value.length()-1).equals(".")) {
+            mEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
-        } else if (depth.substring(depth.length()-1).equals(".")) {
-            depthEditText.requestFocus();
+        } else if (x_value.substring(x_value.length()-1).equals(".")) {
+            xEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
         } else{
             return true;
@@ -122,33 +122,33 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    //On clicking Calculate button this method is called
+    //On clicking CALCULATE button this method is called
     public void postData(View view){
         //To check the state of button and change it if condition is true
-        if(buttonState.equals("reset")){
+        if(buttonState.equals("new_value")){
             submitButton.setText("Calculate");
             buttonState="calculate";
-            lengthEditText.setText("");
-            widthEditText.setText("");
-            depthEditText.setText("");
+//            cEditText.setText("");
+//            mEditText.setText("");
+            xEditText.setText("");
             outputTextView.setText("");
-            lengthEditText.setEnabled(true);
-            widthEditText.setEnabled(true);
-            depthEditText.setEnabled(true);
-            lengthEditText.requestFocus();
+//            cEditText.setEnabled(true);
+//            mEditText.setEnabled(true);
+            xEditText.setEnabled(true);
+            cEditText.requestFocus();
         } else {
-            String width = widthEditText.getText().toString();
-            String length = lengthEditText.getText().toString();
-            String depth = depthEditText.getText().toString();
+            String m_value = mEditText.getText().toString();
+            String c_value = cEditText.getText().toString();
+            String x_value = xEditText.getText().toString();
             //Method Call to check if all editText fields have valid values before posting data to server
-            boolean inputFieldCheck = inputFieldValidation(length, width, depth);
+            boolean inputFieldCheck = inputFieldValidation(c_value, m_value, x_value);
             if(inputFieldCheck){
-                outputTextView.setText("Calculating Price");
+                outputTextView.setText("Calculating Value");
                 submitButton.setClickable(false);
                 buttonState="fetching_price";
-                lengthEditText.setEnabled(false);
-                widthEditText.setEnabled(false);
-                depthEditText.setEnabled(false);
+                cEditText.setEnabled(false);
+                mEditText.setEnabled(false);
+                xEditText.setEnabled(false);
 
                 //Retrofit Class defining base url where app needs to post data
                 Retrofit retrofit = new Retrofit.Builder()
@@ -157,9 +157,9 @@ public class MainActivity extends AppCompatActivity {
                 //Retrofit class generates an implementation of Api interface
                 Api api = retrofit.create(Api.class);
                 String json = "{\n" +
-                        "\t\"width\": " + Float.parseFloat(width) + ",\n" +
-                        "\t\"length\": " + Float.parseFloat(length) + ",\n" +
-                        "\t\"depth\": " + Float.parseFloat(depth) + "\n" +
+                        "\t\"m_value\": " + Float.parseFloat(m_value) + ",\n" +
+                        "\t\"c_value\": " + Float.parseFloat(c_value) + ",\n" +
+                        "\t\"x_value\": " + Float.parseFloat(x_value) + "\n" +
                         "}";
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -172,26 +172,26 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String json = response.body().string();     //receive reponse from server
                             JSONObject jsonOb = new JSONObject(json);
-                            double price = Double.parseDouble(jsonOb.optString("price"));
-                            if(price>10000000) {
-                                String _price = Double.toString(price);
-                                int price_index = _price.indexOf('E');
-                                double __price = Double.parseDouble(_price.substring(0,price_index));
-                                outputTextView.setText("Price: " + String.format("%.2f", __price) + "E" + _price.substring(price_index+1) + "¢");          //Price displayed in scientific notation
+                            double y_value = Double.parseDouble(jsonOb.optString("y"));
+                            if(y_value>10000000) {
+                                String _y_value = Double.toString(y_value);
+                                int y_value_index = _y_value.indexOf('E');
+                                double __y_value = Double.parseDouble(_y_value.substring(0,y_value_index));
+                                outputTextView.setText("y= " + String.format("%.2f", __y_value) + "E" + _y_value.substring(y_value_index+1));          //Price displayed in scientific notation
                             }
-                                else
-                                outputTextView.setText("Price: " + String.format("%.2f", price) + "¢");     //Price displayed as double rounded off to two decimal places
-                            buttonState="reset";
+                            else
+                                outputTextView.setText("y= " + String.format("%.2f", y_value));     //Price displayed as double rounded off to two decimal places
+                            buttonState="new_value";
                             submitButton.setClickable(true);
-                            submitButton.setText("Reset");
+                            submitButton.setText("New Value");
                         } catch (Exception e) {
                             e.printStackTrace();
-                            buttonState="calculator";
+                            buttonState="calculate";
                             submitButton.setClickable(true);
                             outputTextView.setText("");
-                            lengthEditText.setEnabled(true);
-                            widthEditText.setEnabled(true);
-                            depthEditText.setEnabled(true);
+//                            cEditText.setEnabled(true);
+//                            mEditText.setEnabled(true);
+                            xEditText.setEnabled(true);
                         }
                     }
                     //Method executed if request fails
@@ -202,16 +202,30 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Please Check Your Network Connection", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
-                        buttonState="calculator";
+                        buttonState="calculate";
                         submitButton.setClickable(true);
                         outputTextView.setText("");
-                        lengthEditText.setEnabled(true);
-                        widthEditText.setEnabled(true);
-                        depthEditText.setEnabled(true);
+//                        cEditText.setEnabled(true);
+//                        mEditText.setEnabled(true);
+                        xEditText.setEnabled(true);
                     }
                 });
 
             }
         }
+    }
+
+    //On clicking RESET ALL button this method is called
+    public void restAll(View view){
+        submitButton.setText("Calculate");
+        buttonState="calculate";
+        cEditText.setText("");
+        mEditText.setText("");
+        xEditText.setText("");
+        outputTextView.setText("");
+        cEditText.setEnabled(true);
+        mEditText.setEnabled(true);
+        xEditText.setEnabled(true);
+        cEditText.requestFocus();
     }
 }

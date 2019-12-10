@@ -16,36 +16,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depthEditText" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/packaging_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/xEditText" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/roboto_slab"
-        android:text="Packaging Price"
+        android:text="Equation Of A \nStraight Line"
+        android:textAlignment="center"
         android:textColor="#584303"
-        android:textSize="30sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/lengthEditText"
+        android:id="@+id/cEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -53,17 +43,17 @@
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
-        android:hint="Length (in inches)"
+        android:hint="c"
         android:inputType="numberDecimal"
         android:maxLength="20"
         android:tag="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <EditText
-        android:id="@+id/widthEditText"
+        android:id="@+id/mEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -71,17 +61,17 @@
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
-        android:hint="Width (in inches)"
+        android:hint="m"
         android:inputType="numberDecimal"
         android:maxLength="20"
         android:tag="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lengthEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/cEditText" />
 
     <EditText
-        android:id="@+id/depthEditText"
+        android:id="@+id/xEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -89,14 +79,14 @@
         android:layout_marginEnd="40dp"
         android:ems="10"
         android:fontFamily="@font/roboto_slab"
-        android:hint="Depth (in inches)"
+        android:hint="x"
         android:inputType="numberDecimal"
         android:maxLength="20"
         android:tag="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/widthEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/mEditText" />
 
     <Button
         android:id="@+id/submitButton"
@@ -114,17 +104,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depthEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/xEditText" />
+
+    <Button
+        android:id="@+id/resetAllButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="10dp"
+        android:background="#584303"
+        android:fontFamily="@font/roboto_slab"
+        android:onClick="restAll"
+        android:text="RESET ALL"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/outputTextView"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/roboto_slab"
         android:textSize="27sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/resetAllButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitButton" />
