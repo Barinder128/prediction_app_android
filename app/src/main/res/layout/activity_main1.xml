@@ -18,31 +18,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/xEditText" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/resetAllButton2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="10dp"
+        android:background="#584303"
+        android:fontFamily="@font/roboto_slab"
+        android:onClick="restAll"
+        android:text="RESET ALL"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/packaging_logo_sm" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="38dp"
         android:fontFamily="@font/roboto_slab"
-        android:text="Packaging Price"
+        android:text="Equation Of A \nStraight Line"
         android:textColor="#584303"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/cEditText"
@@ -124,10 +131,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
         android:fontFamily="@font/roboto_slab"
         android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintBottom_toTopOf="@+id/resetAllButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitButton" />
