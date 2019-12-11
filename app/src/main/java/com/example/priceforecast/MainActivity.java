@@ -116,6 +116,15 @@ public class MainActivity extends AppCompatActivity {
         } else if (x_value.substring(x_value.length()-1).equals(".")) {
             xEditText.requestFocus();
             Toast.makeText(this, "Input Number should not end with .(dot)", Toast.LENGTH_SHORT).show();
+        } else if (c_value.substring(c_value.length()-1).equals("-")) {
+            cEditText.requestFocus();
+            Toast.makeText(this, "Input Number should not end with negative sign (-)", Toast.LENGTH_SHORT).show();
+        } else if (m_value.substring(m_value.length()-1).equals("-")) {
+            mEditText.requestFocus();
+            Toast.makeText(this, "Input Number should not end with negative sign (-)", Toast.LENGTH_SHORT).show();
+        } else if (x_value.substring(x_value.length()-1).equals("-")) {
+            xEditText.requestFocus();
+            Toast.makeText(this, "Input Number should not end with negative sign (-)", Toast.LENGTH_SHORT).show();
         } else{
             return true;
         }
@@ -128,12 +137,8 @@ public class MainActivity extends AppCompatActivity {
         if(buttonState.equals("new_value")){
             submitButton.setText("Calculate");
             buttonState="calculate";
-//            cEditText.setText("");
-//            mEditText.setText("");
             xEditText.setText("");
             outputTextView.setText("");
-//            cEditText.setEnabled(true);
-//            mEditText.setEnabled(true);
             xEditText.setEnabled(true);
             cEditText.requestFocus();
         } else {
@@ -170,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                         try {
-                            String json = response.body().string();     //receive reponse from server
+                            String json = response.body().string();     //receive response from server
                             JSONObject jsonOb = new JSONObject(json);
                             double y_value = Double.parseDouble(jsonOb.optString("y"));
                             if(y_value>10000000) {
@@ -189,8 +194,6 @@ public class MainActivity extends AppCompatActivity {
                             buttonState="calculate";
                             submitButton.setClickable(true);
                             outputTextView.setText("");
-//                            cEditText.setEnabled(true);
-//                            mEditText.setEnabled(true);
                             xEditText.setEnabled(true);
                         }
                     }
@@ -205,8 +208,6 @@ public class MainActivity extends AppCompatActivity {
                         buttonState="calculate";
                         submitButton.setClickable(true);
                         outputTextView.setText("");
-//                        cEditText.setEnabled(true);
-//                        mEditText.setEnabled(true);
                         xEditText.setEnabled(true);
                     }
                 });
