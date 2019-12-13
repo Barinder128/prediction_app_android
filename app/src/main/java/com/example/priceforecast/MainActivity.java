@@ -180,9 +180,10 @@ public class MainActivity extends AppCompatActivity {
                             double y_value = Double.parseDouble(jsonOb.optString("y"));
                             if(y_value>10000000) {
                                 String _y_value = Double.toString(y_value);
-                                int y_value_index = _y_value.indexOf('E');
-                                double y_mantissa_value = Double.parseDouble(_y_value.substring(0,y_value_index));
-                                outputTextView.setText("y= " + String.format("%.2f", y_mantissa_value) + "E" + _y_value.substring(y_value_index+1));          //Price displayed in scientific notation
+                                int y_value_e_index = _y_value.indexOf('E');
+                                double y_mantissa_value = Double.parseDouble(_y_value.substring(0,y_value_e_index));
+                                String y_exponent_value = _y_value.substring(y_value_e_index+1);
+                                outputTextView.setText("y= " + String.format("%.2f", y_mantissa_value) + "E" + y_exponent_value);          //Price displayed in scientific notation
                             }
                             else
                                 outputTextView.setText("y= " + String.format("%.2f", y_value));     //Price displayed as double rounded off to two decimal places
