@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
                             if(y_value>10000000) {
                                 String _y_value = Double.toString(y_value);
                                 int y_value_index = _y_value.indexOf('E');
-                                double __y_value = Double.parseDouble(_y_value.substring(0,y_value_index));
-                                outputTextView.setText("y= " + String.format("%.2f", __y_value) + "E" + _y_value.substring(y_value_index+1));          //Price displayed in scientific notation
+                                double y_mantissa_value = Double.parseDouble(_y_value.substring(0,y_value_index));
+                                outputTextView.setText("y= " + String.format("%.2f", y_mantissa_value) + "E" + _y_value.substring(y_value_index+1));          //Price displayed in scientific notation
                             }
                             else
                                 outputTextView.setText("y= " + String.format("%.2f", y_value));     //Price displayed as double rounded off to two decimal places
