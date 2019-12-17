@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@+id/xEditText" />
 
     <Button
-        android:id="@+id/resetAllButton"
+        android:id="@+id/resetButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -116,7 +116,7 @@
         android:background="#584303"
         android:fontFamily="@font/roboto_slab"
         android:onClick="restAll"
-        android:text="RESET ALL"
+        android:text="RESET"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +132,7 @@
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/roboto_slab"
         android:textSize="27sp"
-        app:layout_constraintBottom_toTopOf="@+id/resetAllButton"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitButton" />

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     EditText xEditText;
     TextView outputTextView;
     Button submitButton;
+    Button resetButton;
     String buttonState = "calculate";
     boolean doubleBackToExitPressedOnce = false;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         xEditText = findViewById(R.id.xEditText);
         outputTextView = findViewById(R.id.outputTextView);
         submitButton = findViewById(R.id.submitButton);
+        resetButton = findViewById(R.id.resetButton);
     }
 
     //Method to hide keyboard when we touch outside editText fields in Android App
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             if(inputFieldCheck){
                 outputTextView.setText("Calculating Value");
                 submitButton.setClickable(false);
+                resetButton.setClickable(false);
                 buttonState="fetching_price";
                 cEditText.setEnabled(false);
                 mEditText.setEnabled(false);
@@ -189,11 +192,13 @@ public class MainActivity extends AppCompatActivity {
                                 outputTextView.setText("y= " + String.format("%.2f", y_value));     //Price displayed as double rounded off to two decimal places
                             buttonState="new_value";
                             submitButton.setClickable(true);
+                            resetButton.setClickable(true);
                             submitButton.setText("New Value");
                         } catch (Exception e) {
                             e.printStackTrace();
                             buttonState="calculate";
                             submitButton.setClickable(true);
+                            resetButton.setClickable(true);
                             outputTextView.setText("");
                             xEditText.setEnabled(true);
                         }
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
                         buttonState="calculate";
                         submitButton.setClickable(true);
+                        resetButton.setClickable(true);
                         outputTextView.setText("");
                         xEditText.setEnabled(true);
                     }
